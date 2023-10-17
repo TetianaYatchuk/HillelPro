@@ -31,15 +31,19 @@ if(question === answerAdd ||question === answerDiff || question === answerDiv ||
 
   if(question === answerAdd) {
     alert(resultAdd);
+    alert('Good by, see you later.')
   } else if(question === answerDiff) {
     alert(resultDiff);
+    alert('Good by, see you later.')
   } else if(question === answerMult) {
     alert(resultMult);
+    alert('Good by, see you later.')
   } else if(question === answerDiv) {
     if(secondNum === 0) {
       alert('Division into zero is impossible.')
     } else {
       alert(resultDiv);
+      alert('Good by, see you later.')
     }
   } 
 } else if(question === null || undefined) {
@@ -57,10 +61,13 @@ if(question === answerAdd ||question === answerDiff || question === answerDiv ||
 
   if(question === answerSqrt) {
     alert(resultRoot);
+    alert('Good by, see you later.')
     } else if(question === answerSin) {
       alert(resultSin);
+      alert('Good by, see you later.')
     } else if(question === answerCos) {
       alert(resultCos);
+      alert('Good by, see you later.')
     }
 } else {
   alert('Good by, see you later.')
