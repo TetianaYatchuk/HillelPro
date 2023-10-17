@@ -1,7 +1,7 @@
 'use strict';
 
 const greetings = prompt('Welcome to calculator!');
-const question = prompt('What action you want to do? Add, Diff, Mult, Div, Sqrt, Sin, Cos');
+const question = prompt('What action you want to do? add, diff, mult, div, sqrt, sin, cos');
 
 const answerAdd = ('add');
 const answerDiff = ('diff');
