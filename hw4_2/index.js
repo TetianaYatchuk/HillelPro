@@ -35,11 +35,11 @@ switch (question) {
   case 'sin' : 
   case 'cos' : {
     const num = parseInt(prompt('Enter number, 0'));
-    num ? alert(num) : alert('This is bad digit, good by!');
+    num ? '' : alert('This is bad digit, good by!');
 
     const resultRoot = `Calculation is finished!\n\nRoot: ${Math.sqrt(num)} = √${num}.`;
-    const resultSin = `Calculation is finished!\n\nSin: ${Math.sin(num)} = sin(${num}).`;
-    const resultCos = `Calculation is finished!\n\nCos: ${Math.cos(num)} = cos(${num}).`;
+    const resultSin = `Calculation is finished!\n\nSinus: ${Math.sin(num)} = sin(${num}).`;
+    const resultCos = `Calculation is finished!\n\nCosinus: ${Math.cos(num)} = cos(${num}).`;
       switch (question) {
         case 'sqrt' : alert(resultRoot); break
         case 'sin' : alert(resultSin); break 
