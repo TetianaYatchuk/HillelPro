@@ -28,7 +28,6 @@ answer : while (startCalc) {
         while (!Number.isInteger(firstNum)) {
           let choice = prompt('Enter first number', 0);
           if (choice === null) { 
-            choice === false;
             alert('Good by, see you later.');
             break answer;
           }
@@ -44,7 +43,6 @@ answer : while (startCalc) {
         while (!Number.isInteger(secondNum)) {
           let choice = prompt('Enter second number', 0);
           if (choice === null) { 
-            choice === false;
             alert('Good by, see you later.');
             break answer;
           }
@@ -94,7 +92,6 @@ answer : while (startCalc) {
         while (!Number.isInteger(num)) {
           const choice = prompt('Enter number', 0);
           if (choice === null) {
-            choice = false;
             alert('Good by, see you later.');
             break answer;
           }
@@ -141,9 +138,11 @@ answer : while (startCalc) {
             alert('There are no operations in the history yet.');break;
           } 
 
-          for(const [index, operation] of history.entries()) {
-            alert(`Your operation:\n\n ${index + 1} ${operation}`);
-          }
+          let historyMessage = 'Your operation:\n\n';
+          history.forEach(function(operation, index) {
+            historyMessage += `${index + 1}. ${operation}\n`
+          });
+          alert(historyMessage)
 
           startCalc = confirm('Do you want continue work with me?');
           if (!startCalc) {
