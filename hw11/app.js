@@ -6,5 +6,7 @@ function factorial(n) {
   }
 }
 
-console.log( factorial(4) );
+const n = 5;
+const result = factorial(n);
+console.log(`${n}! = ${result}`);
 
