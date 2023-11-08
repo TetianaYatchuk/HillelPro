@@ -1,3 +1,5 @@
+'use strict';
+
 function changeSum () {
   let number = 0;
   return function (sum) {
