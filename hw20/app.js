@@ -1,5 +1,13 @@
 'use strict';
 
+class Node {
+  constructor(value, previous = null, next = null) {
+    this.value = value;
+    this.previous = previous;
+    this.next = next;
+  }
+}
+
 class DoubleLinkedList {
   constructor(capasity) {
     this.head = null;
