@@ -1,0 +1,67 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background: rgb(6, 94, 141);
+  color: rgba(43, 223, 226, 0.894);
+}
+
+.container {
+  min-width: 346px;
+  margin: 0 auto;
+}
+
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 25px;
+  font-weight: 200;
+  letter-spacing: 1.6px;
+  text-transform: capitalize;
+  width: 100px;
+}
+
+.slider-prev {
+  left: 0;
+}
+
+.slider-next {
+  right: 0;
+}
+
+button:active {
+  background: darkcyan;
+}
+
+.slider {
+  width: 512px;
+  height: 512px;
+  border: 2px solid black;
+  margin: 30px auto;
+  overflow: hidden;
+}
+
+.image {
+  width: 512px;
+  height: 512px;
+}
+
+.slider-inner {
+  height: 512px;
+  width: 4096px;
+  background: darkcyan;
+  display: flex;
+  position: relative;
+  left: 0;
+  transition: all ease 2s;
+}
