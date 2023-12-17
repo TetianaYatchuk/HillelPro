@@ -1,7 +1,68 @@
 'use strict';
 
+function copyStyles(styles) {
+  const copiedStyles = Object.assign({}, styles);
+  copiedStyles.container = Object.assign({}, styles.container);
+  copiedStyles.list = Object.assign({}, styles.list);
+  copiedStyles.button = Object.assign({}, styles.button);
+  copiedStyles.subul = Object.assign({}, styles.subul);
+  copiedStyles.subitemButton = Object.assign({}, styles.subitemButton);
+  copiedStyles.productInfo = Object.assign({}, styles.productInfo);
+  copiedStyles.buyButton = Object.assign({}, styles.buyButton);
+  return copiedStyles;
+}
+
+const styles = {
+  container: {
+    height: '100vh',
+  },
+  list: {
+    listStyle: 'none',
+    padding: '0',
+  },
+  button: {
+    width: '200px',
+    fontWeight: '600',
+    fontSize: '25px',
+  },
+  subul: {
+    display: 'none',
+    position: 'absolute',
+    left: '25%',
+    top: '0',
+  },
+  subitemButton: {
+    width: '200px',
+    fontWeight: '600',
+    fontSize: '25px',
+  },
+  productInfo: {
+    display: 'none',
+    position: 'absolute',
+    left: '100%',
+    top: '0',
+    border: '1px solid black',
+    width: '200px',
+    height: '100px',
+  },
+  liitem: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  buyButton: {
+    background: 'blue',
+    color: 'white',
+  },
+};
+
+const copiedStyles = copyStyles(styles);
+
+let currentView = 'categories';
+
 const containerDiv = document.createElement('div');
 containerDiv.classList.add('container');
+Object.assign(containerDiv.style, copiedStyles.container);
 const ul = document.createElement('ul');
 ul.classList.add('list');
 
@@ -23,38 +84,40 @@ const productsInfo = {
   'Blueberry': { name: 'Blueberry', price: 90 }
 };
 
+function updateView() {
+  if (currentView === 'categories') {
+    ul.style.display = 'block';
+  } else if (currentView === 'productInfo') {
+    ul.style.display = 'none';
+  }
+}
+
 for (let i = 0; i < categories.length; i++) {
   const category = categories[i];
 
   const li = document.createElement('li');
   li.classList.add('item');
-  li.style.listStyle = 'none';
+  Object.assign(li.style, copiedStyles.list);
 
   const button = document.createElement('button');
   button.classList.add(`button`);
-  button.style.width = '200px';
-  button.style.fontWeight = '600';
-  button.style.fontSize = '25px';
+  Object.assign(button.style, copiedStyles.button);
   button.textContent = category.name;
 
   li.appendChild(button);
 
   const subUl = document.createElement('ul');
   subUl.classList.add('subul');
-  subUl.style.display = 'none';
-  subUl.style.position = 'absolute';
-  subUl.style.left = '25%';
-  subUl.style.top = '0';
+  Object.assign(subUl.style, copiedStyles.subul);
 
   for (let j = 0; j < category.values.length; j++) {
     const subLi = document.createElement('li');
     subLi.classList.add('subitem');
     subLi.style.listStyle = 'none';
+    subUl.style.display = 'none';
     const subButton = document.createElement('button');
     subButton.classList.add(`button-inner`);
-    subButton.style.width = '200px';
-    subButton.style.fontWeight = '600';
-    subButton.style.fontSize = '25px';
+    Object.assign(subButton.style, copiedStyles.subitemButton);
     subButton.textContent = category.values[j];
     subLi.appendChild(subButton);
 
@@ -62,33 +125,28 @@ for (let i = 0; i < categories.length; i++) {
     const liItem = document.createElement('li');
     liItem.classList.add('item');
     liItem.style.listStyle = 'none';
-    liItem.style.position = 'absolute';
-    liItem.style.left = '100%';
-    liItem.style.top = '0';
-    liItem.style.border = '1px solid black';
-    liItem.style.display = 'flex';
-    liItem.style.flexDirection = 'column';
-    liItem.style.alignItems = 'center';
-    liItem.style.width = '200px';
-    liItem.style.height= '100px';
+    Object.assign(liItem.style, copiedStyles.productInfo);
+    Object.assign(liItem.style, copiedStyles.list);
     liItem.textContent = `Name: ${productInfo.name}, Price: $${productInfo.price}`;
     subLi.appendChild(liItem);
 
     const buyButton = document.createElement('button');
-      buyButton.style.background = 'blue';
-      buyButton.style.color = 'white';
+    Object.assign(buyButton.style, copiedStyles.buyButton);
 
       buyButton.textContent = 'Buy';
       buyButton.addEventListener('click', () => {
         alert(`Congratulation!\nYou buy:\n  ${productInfo.name},\n Price: $${productInfo.price}`);
-        return ul;
+        updateView();
       })
 
     liItem.appendChild(buyButton)
 
     subUl.appendChild(subLi);
     subButton.addEventListener('click', function () {
-      liItem.style.display = liItem.style.display === 'none' ? 'flex' : 'none';
+      liItem.style.display = liItem.style.display === 'none' ? Object.assign(liItem.style, copiedStyles.liitem) : 'none';
+      if (currentView === 'categories') {
+        updateView();
+      }
     });
   }
 
