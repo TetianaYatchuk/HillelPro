@@ -1,162 +1,124 @@
 'use strict';
 
-function copyStyles(styles) {
-  const copiedStyles = Object.assign({}, styles);
-  copiedStyles.container = Object.assign({}, styles.container);
-  copiedStyles.list = Object.assign({}, styles.list);
-  copiedStyles.button = Object.assign({}, styles.button);
-  copiedStyles.subul = Object.assign({}, styles.subul);
-  copiedStyles.subitemButton = Object.assign({}, styles.subitemButton);
-  copiedStyles.productInfo = Object.assign({}, styles.productInfo);
-  copiedStyles.buyButton = Object.assign({}, styles.buyButton);
-  return copiedStyles;
-}
-
-const styles = {
-  container: {
-    height: '100vh',
-  },
-  list: {
-    listStyle: 'none',
-    padding: '0',
-  },
-  button: {
-    width: '200px',
-    fontWeight: '600',
-    fontSize: '25px',
-  },
-  subul: {
-    display: 'none',
-    position: 'absolute',
-    left: '25%',
-    top: '0',
-  },
-  subitemButton: {
-    width: '200px',
-    fontWeight: '600',
-    fontSize: '25px',
-  },
-  productInfo: {
-    display: 'none',
-    position: 'absolute',
-    left: '100%',
-    top: '0',
-    border: '1px solid black',
-    width: '200px',
-    height: '100px',
-  },
-  liitem: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  buyButton: {
-    background: 'blue',
-    color: 'white',
-  },
-};
-
-const copiedStyles = copyStyles(styles);
-
-let currentView = 'categories';
-
-const containerDiv = document.createElement('div');
-containerDiv.classList.add('container');
-Object.assign(containerDiv.style, copiedStyles.container);
-const ul = document.createElement('ul');
-ul.classList.add('list');
-
 const categories = [
-  { name: 'Fruits', values: ['Apple', 'Pineapple', 'Banana'] },
-  { name: 'Vegetables', values: ['Potato', 'Tomato', 'Cucumber'] },
-  { name: 'Berries', values: ['Strawberry', 'Grape', 'Blueberry'] }
+  { name: 'Fruits', products: ['Apple', 'Pineapple', 'Banana'] },
+  { name: 'Vegetables', products: ['Potato', 'Tomato', 'Cucumber'] },
+  { name: 'Berries', products: ['Strawberry', 'Grape', 'Blueberry'] }
 ];
 
 const productsInfo = {
-  'Apple': { name: 'Apple', price: 10 },
-  'Pineapple': { name: 'Pineapple', price: 20 },
-  'Banana': { name: 'Banana', price: 30 },
-  'Potato': { name: 'Potato', price: 40 },
-  'Tomato': { name: 'Tomato', price: 50 },
-  'Cucumber': { name: 'Cucumber', price: 60 },
-  'Strawberry': { name: 'Strawberry', price: 70 },
-  'Grape': { name: 'Grape', price: 80 },
-  'Blueberry': { name: 'Blueberry', price: 90 }
+  'Apple': { name: 'Apple', price: 10, description: 'Sweet and delicious' },
+  'Pineapple': { name: 'Pineapple', price: 20, description: 'Tropical delight' },
+  'Banana': { name: 'Banana', price: 30, description: 'Rich in potassium' },
+  'Potato': { name: 'Potato', price: 40, description: 'Versatile and nutritious' },
+  'Tomato': { name: 'Tomato', price: 50, description: 'Juicy and flavorful' },
+  'Cucumber': { name: 'Cucumber', price: 60, description: 'Cool and refreshing' },
+  'Strawberry': { name: 'Strawberry', price: 70, description: 'Sweet and juicy' },
+  'Grape': { name: 'Grape', price: 80, description: 'Perfect snack' },
+  'Blueberry': { name: 'Blueberry', price: 90, description: 'Packed with antioxidants' }
 };
 
-function updateView() {
-  if (currentView === 'categories') {
-    ul.style.display = 'block';
-  } else if (currentView === 'productInfo') {
-    ul.style.display = 'none';
-  }
-}
+const container = document.createElement('div');
+container.classList.add('container');
+document.body.appendChild(container);
 
-for (let i = 0; i < categories.length; i++) {
-  const category = categories[i];
+const categoriesList = document.createElement('ul');
+categoriesList.classList.add('categories-list', 'd-flex', 'flex-column', 'p-2', 'rounded');
+categoriesList.style.position = 'absolute';
+categoriesList.style.top = '0';
+categoriesList.style.left = '0';
+categoriesList.style.width = ('300px');
+container.appendChild(categoriesList);
 
-  const li = document.createElement('li');
-  li.classList.add('item');
-  Object.assign(li.style, copiedStyles.list);
+const productsList = document.createElement('ul');
+productsList.classList.add('products-list', 'd-flex', 'flex-column', 'p-2', 'rounded');
+productsList.style.position = 'relative';
+productsList.style.top = '0';
+productsList.style.left = '30%';
+productsList .style.width = ('300px');
+container.appendChild(productsList);
 
-  const button = document.createElement('button');
-  button.classList.add(`button`);
-  Object.assign(button.style, copiedStyles.button);
-  button.textContent = category.name;
+const productsListInfo = document.createElement('ul');
+productsListInfo.classList.add('products-list-info', 'd-flex', 'flex-column', 'p-2', 'rounded');
+productsListInfo.style.alignItems = ('center');
+productsListInfo.style.position = 'absolute';
+productsListInfo.style.top = '0';
+productsListInfo.style.left = '70%';
+productsListInfo .style.width = ('300px');
+container.appendChild(productsListInfo);
 
-  li.appendChild(button);
+let selectedProduct;
 
-  const subUl = document.createElement('ul');
-  subUl.classList.add('subul');
-  Object.assign(subUl.style, copiedStyles.subul);
-
-  for (let j = 0; j < category.values.length; j++) {
-    const subLi = document.createElement('li');
-    subLi.classList.add('subitem');
-    subLi.style.listStyle = 'none';
-    subUl.style.display = 'none';
-    const subButton = document.createElement('button');
-    subButton.classList.add(`button-inner`);
-    Object.assign(subButton.style, copiedStyles.subitemButton);
-    subButton.textContent = category.values[j];
-    subLi.appendChild(subButton);
-
-    const productInfo = productsInfo[category.values[j]];
-    const liItem = document.createElement('li');
-    liItem.classList.add('item');
-    liItem.style.listStyle = 'none';
-    Object.assign(liItem.style, copiedStyles.productInfo);
-    Object.assign(liItem.style, copiedStyles.list);
-    liItem.textContent = `Name: ${productInfo.name}, Price: $${productInfo.price}`;
-    subLi.appendChild(liItem);
-
-    const buyButton = document.createElement('button');
-    Object.assign(buyButton.style, copiedStyles.buyButton);
-
-      buyButton.textContent = 'Buy';
-      buyButton.addEventListener('click', () => {
-        alert(`Congratulation!\nYou buy:\n  ${productInfo.name},\n Price: $${productInfo.price}`);
-        updateView();
-      })
-
-    liItem.appendChild(buyButton)
-
-    subUl.appendChild(subLi);
-    subButton.addEventListener('click', function () {
-      liItem.style.display = liItem.style.display === 'none' ? Object.assign(liItem.style, copiedStyles.liitem) : 'none';
-      if (currentView === 'categories') {
-        updateView();
-      }
-    });
-  }
-
-  button.addEventListener('click', function () {
-    subUl.style.display = subUl.style.display === 'none' ? 'block' : 'none';
+function createCategoryList() {
+  categories.forEach(category => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('btn', 'btn-primary', 'mb-2');
+    listItem.textContent = category.name;
+    listItem.addEventListener('click', () => showProducts(category.products));
+    categoriesList.appendChild(listItem);
   });
-
-  li.appendChild(subUl);
-  ul.appendChild(li);
 }
 
-containerDiv.appendChild(ul);
-document.body.append(containerDiv);
+function showProducts(productArray) {
+  clearElement(productsList);
+
+  productArray.forEach(productName => {
+    const product = productsInfo[productName];
+    const listItem = document.createElement('li');
+    listItem.classList.add('btn', 'btn-primary', 'mb-2');
+    listItem.textContent = `${product.name}`;
+    listItem.addEventListener('click', () => showProductInfo(product));
+    productsList.appendChild(listItem);
+  });
+}
+
+function showProductInfo(product) {
+  clearElement(productsListInfo);
+
+  selectedProduct = product;
+
+  const productInfoButton = document.createElement('button');
+  productInfoButton.classList.add('btn', 'btn-info', 'mb-2');
+  productInfoButton.textContent = `${product.name} - $${product.price}`;
+
+  const descriptionLabel = document.createElement('p');
+  descriptionLabel.textContent = `${product.description}`;
+
+  const buyButton = document.createElement('button');
+  buyButton.classList.add('btn', 'btn-primary', 'ml-2', 'mb-2');
+  buyButton.textContent = 'Buy';
+  buyButton.addEventListener('click', () => buyProduct(selectedProduct));
+
+  productsListInfo.appendChild(productInfoButton);
+  productsListInfo.appendChild(descriptionLabel);
+  productsListInfo.appendChild(buyButton);
+}
+
+function buyProduct(product) {
+  Swal.fire({
+        title: `Do you want to buy?\n ${product.name},\n Price:$${product.price}`,
+        showDenyButton: true,
+        confirmButtonText: "Add to cart",
+        denyButtonText: `Delete`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Add to cart!", "", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+  resetView();
+  clearElement(productsList);
+}
+
+function resetView() {
+  clearElement(productsListInfo);
+}
+
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+createCategoryList();
