@@ -1,0 +1,16 @@
+{
+  "name": "hw26",
+  "version": "1.0.0",
+  "description": "modified-store",
+  "main": "app.js",
+  "scripts": {
+    "start": "live-server"
+  },
+  "keywords": [],
+  "author": "Tetiana Yatchuk",
+  "license": "ISC",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  },
+  "devDependencies": {}
+}

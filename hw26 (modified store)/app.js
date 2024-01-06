@@ -1,208 +1,278 @@
 'use strict';
 
-function copyStyles(styles) {
-  const copiedStyles = Object.assign({}, styles);
-  copiedStyles.container = Object.assign({}, styles.container);
-  copiedStyles.list = Object.assign({}, styles.list);
-  copiedStyles.button = Object.assign({}, styles.button);
-  copiedStyles.subul = Object.assign({}, styles.subul);
-  copiedStyles.subitemButton = Object.assign({}, styles.subitemButton);
-  copiedStyles.productInfo = Object.assign({}, styles.productInfo);
-  copiedStyles.liitem = Object.assign({}, styles.liitem);
-  copiedStyles.buyButton = Object.assign({}, styles.buyButton);
-  return copiedStyles;
-}
-
-const styles = {
-  container: {
-    height: '100vh',
-  },
-  list: {
-    listStyle: 'none',
-    padding: '0',
-  },
-  button: {
-    width: '200px',
-    fontWeight: '600',
-    fontSize: '25px',
-  },
-  subul: {
-    display: 'none',
-    position: 'absolute',
-    left: '25%',
-    top: '0',
-  },
-  subitemButton: {
-    width: '200px',
-    fontWeight: '600',
-    fontSize: '25px',
-  },
-  productInfo: {
-    display: 'none',
-    position: 'absolute',
-    left: '100%',
-    top: '0',
-    border: '1px solid black',
-    width: '200px',
-    height: '100px',
-  },
-  liitem: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  buyButton: {
-    background: 'blue',
-    color: 'white',
-  },
-};
-
-const copiedStyles = copyStyles(styles);
-
-let currentView = 'categories';
-
-const containerDiv = document.createElement('div');
-containerDiv.classList.add('container');
-Object.assign(containerDiv.style, copiedStyles.container);
-const ul = document.createElement('ul');
-ul.classList.add('list');
-
-const inputCategories = [
-  {name: 'ПІБ'},
-  {name: 'Місто'},
-  {name: 'Склад Нової пошти'},
-  {name: 'Кількість продукції,'},
-]
-
 const categories = [
-  { name: 'Fruits', values: ['Apple', 'Pineapple', 'Banana'] },
-  { name: 'Vegetables', values: ['Potato', 'Tomato', 'Cucumber'] },
-  { name: 'Berries', values: ['Strawberry', 'Grape', 'Blueberry'] }
+  { name: 'Fruits', products: ['Apple', 'Pineapple', 'Banana'] },
+  { name: 'Vegetables', products: ['Potato', 'Tomato', 'Cucumber'] },
+  { name: 'Berries', products: ['Strawberry', 'Grape', 'Blueberry'] }
 ];
 
 const productsInfo = {
-  'Apple': { name: 'Apple', price: 10 },
-  'Pineapple': { name: 'Pineapple', price: 20 },
-  'Banana': { name: 'Banana', price: 30 },
-  'Potato': { name: 'Potato', price: 40 },
-  'Tomato': { name: 'Tomato', price: 50 },
-  'Cucumber': { name: 'Cucumber', price: 60 },
-  'Strawberry': { name: 'Strawberry', price: 70 },
-  'Grape': { name: 'Grape', price: 80 },
-  'Blueberry': { name: 'Blueberry', price: 90 }
+  'Apple': { name: 'Apple', price: 10, description: 'Sweet and delicious' },
+  'Pineapple': { name: 'Pineapple', price: 20, description: 'Tropical delight' },
+  'Banana': { name: 'Banana', price: 30, description: 'Rich in potassium' },
+  'Potato': { name: 'Potato', price: 40, description: 'Versatile and nutritious' },
+  'Tomato': { name: 'Tomato', price: 50, description: 'Juicy and flavorful' },
+  'Cucumber': { name: 'Cucumber', price: 60, description: 'Cool and refreshing' },
+  'Strawberry': { name: 'Strawberry', price: 70, description: 'Sweet and juicy' },
+  'Grape': { name: 'Grape', price: 80, description: 'Perfect snack' },
+  'Blueberry': { name: 'Blueberry', price: 90, description: 'Packed with antioxidants' }
 };
 
-const form = createOrderForm();
+const container = document.createElement('div');
+container.classList.add('container');
+document.body.appendChild(container);
 
-function createOrderForm() {
-  const form = document.createElement('form');
-  form.classList.add('order-form');
+const categoriesList = document.createElement('ul');
+categoriesList.classList.add('categories-list', 'd-flex', 'flex-column', 'p-2', 'rounded');
+categoriesList.style.position = 'absolute';
+categoriesList.style.top = '0';
+categoriesList.style.left = '0';
+categoriesList.style.width = ('300px');
+container.appendChild(categoriesList);
 
-  const formDiv = document.createElement('div');
-  formDiv.id = `form-block`;
-  
-  const label = document.createElement('label');
-  label.id = `form-label`;
-  
-  const input = document.createElement('input');
-  input.id = `form-input`;
-  
-  form.appendChild(formDiv);
-  formDiv.appendChild(label);
-  label.appendChild(input);
+const productsList = document.createElement('ul');
+productsList.classList.add('products-list', 'd-flex', 'flex-column', 'p-2', 'rounded');
+productsList.style.position = 'relative';
+productsList.style.top = '0';
+productsList.style.left = '30%';
+productsList .style.width = ('300px');
+container.appendChild(productsList);
 
-  input.addEventListener('input', function () {
-    const inputName = input.id.replace('form-input-', '');
-    const formElement = document.getElementById(`form-input-${inputName}`);
-    if (formElement) {
-      formElement.value = input.value;
+const productsListInfo = document.createElement('ul');
+productsListInfo.classList.add('products-list-info', 'd-flex', 'flex-column', 'p-2', 'rounded');
+productsListInfo.style.alignItems = ('center');
+productsListInfo.style.position = 'absolute';
+productsListInfo.style.top = '0';
+productsListInfo.style.left = '70%';
+productsListInfo .style.width = ('300px');
+container.appendChild(productsListInfo);
+
+let selectedProduct;
+
+function createCategoryList() {
+  categories.forEach(category => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('btn', 'btn-primary', 'mb-2');
+    listItem.textContent = category.name;
+    listItem.addEventListener('click', () => showProducts(category.products));
+    categoriesList.appendChild(listItem);
+  });
+}
+
+function showProducts(productArray) {
+  clearElement(productsList);
+
+  productArray.forEach(productName => {
+    const product = productsInfo[productName];
+    const listItem = document.createElement('li');
+    listItem.classList.add('btn', 'btn-primary', 'mb-2');
+    listItem.textContent = `${product.name}`;
+    listItem.addEventListener('click', () => showProductInfo(product));
+    productsList.appendChild(listItem);
+  });
+}
+
+function showProductInfo(product) {
+  selectedProduct = product;
+
+  const productInfoButton = document.createElement('button');
+  productInfoButton.classList.add('btn', 'btn-info', 'mb-2');
+  productInfoButton.textContent = `${product.name} - ${product.price}`;
+
+  const descriptionLabel = document.createElement('p');
+  descriptionLabel.textContent = `${product.description}`;
+
+  const buyButton = document.createElement('button');
+  buyButton.classList.add('btn', 'btn-primary', 'ml-2', 'mb-2');
+  buyButton.textContent = 'Buy';
+  buyButton.addEventListener('click', () =>
+    buyProduct(product),
+    clearElement(productsListInfo));
+
+  productsListInfo.appendChild(productInfoButton);
+  productsListInfo.appendChild(descriptionLabel);
+  productsListInfo.appendChild(buyButton);
+}
+
+function buyProduct(product) {
+  Swal.fire({
+        title: `Do you want to buy?\n ${product.name},\n Price:$${product.price}`,
+        showDenyButton: true,
+        confirmButtonText: "Add to cart",
+        denyButtonText: `Delete`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Add to cart!", "", "success");
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+        orderListForm();
+      });
+  resetView();
+  clearElement(productsList);
+}
+
+const orderForm = document.createElement('form');
+orderForm.classList.add('order-form', 'd-flex', 'flex-column', 'p-5', 'm-5');
+
+function orderListForm(product) {
+  clearElement(orderForm);
+
+  const nameLabel = document.createElement('label');
+  nameLabel.classList.add('label', 'mb-2');
+  nameLabel.textContent = 'Name:';
+  const nameInput = document.createElement('input');
+  nameInput.setAttribute('type', 'text');
+  nameInput.setAttribute('required', 'true');
+  nameLabel.appendChild(nameInput);
+
+  nameLabel.appendChild(nameInput);
+
+  const surNameLabel = document.createElement('label');
+  surNameLabel.classList.add('label', 'mb-2');
+  surNameLabel.textContent = 'Surname:';
+  const surNameInput = document.createElement('input');
+  surNameInput.setAttribute('type', 'text');
+  surNameInput.setAttribute('required', 'true');
+
+  surNameLabel.appendChild(surNameInput);
+
+  orderForm.appendChild(nameLabel);
+  orderForm.appendChild(surNameLabel);
+
+  const cityLabel = document.createElement('label');
+  cityLabel.classList.add('label', 'mb-2');
+  cityLabel.textContent = 'Choose city:';
+
+  const citySelect = document.createElement('select');
+  const cities = ['Odessa', 'Kyiv', 'Kharkiv', 'Lviv'];
+
+  cities.forEach(city => {
+    const option = document.createElement('option');
+    option.textContent = city;
+    citySelect.appendChild(option);
+  });
+  cityLabel.appendChild(citySelect);
+  orderForm.appendChild(cityLabel);
+
+  const postalService = document.createElement('label');
+  postalService.classList.add('label', 'mb-2');
+  postalService.textContent = 'Choose postal service:';
+
+  const postalSelect = document.createElement('select');
+  const postals = ['Nova poshta', 'Ukrposhta'];
+
+  postals.forEach(postal => {
+    const option = document.createElement('option');
+    option.textContent = postal;
+    postalSelect.appendChild(option);
+  });
+  postalService.appendChild(postalSelect);
+  orderForm.appendChild(postalService);
+
+  const postalWarehouse = document.createElement('label');
+  postalWarehouse.classList.add('label', 'mb-2');
+  postalWarehouse.textContent = 'Choose post office:';
+
+  const warehouse = document.createElement('select');
+  const postOffice = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
+
+  postOffice.forEach(office => {
+    const option = document.createElement('option');
+    option.textContent = office;
+
+    if (office === '') {
+      alert('Enter post office!')
+    }
+
+    warehouse.appendChild(option);
+  });
+
+  postalWarehouse.appendChild(warehouse);
+  orderForm.appendChild(postalWarehouse);
+
+  const paymentLabel = document.createElement('label');
+  paymentLabel.classList.add('label', 'mb-2');
+  paymentLabel.textContent = 'Payment Method:';
+  const paymentSelect = document.createElement('select');
+  const paymentMethods = ['Cash on Delivery', 'Credit Card Payment'];
+
+  paymentMethods.forEach(paymentMethod => {
+    const option = document.createElement('option');
+    option.textContent = paymentMethod;
+    paymentSelect.appendChild(option);
+  });
+  paymentLabel.appendChild(paymentSelect);
+  orderForm.appendChild(paymentLabel);
+
+  const quantityLabel = document.createElement('label');
+  quantityLabel.classList.add('label', 'mb-2');
+  quantityLabel.textContent = 'Quantity:';
+  const quantityInput = document.createElement('input');
+  quantityInput.setAttribute('type', 'number');
+  quantityInput.setAttribute('min', '0');
+
+  quantityLabel.appendChild(quantityInput);
+  orderForm.appendChild(quantityLabel);
+
+  const commentLabel = document.createElement('label');
+  commentLabel.classList.add('label', 'mb-2');
+  commentLabel.textContent = 'Comment:';
+  const commentInput = document.createElement('textarea');
+  commentLabel.appendChild(commentInput);
+  orderForm.appendChild(commentLabel);
+
+  const submitButton = document.createElement('button');
+  submitButton.classList.add('btn', 'btn-success', 'mt-2');
+  submitButton.textContent = 'Make a purchase';
+  submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const isFormValid = orderForm.checkValidity();
+
+    const quantityInput = document.querySelector('.order-form input[type="number"]');
+    const quantityValue = parseInt(quantityInput.value, 10);
+    const isQuantityValid = quantityValue > 0;
+
+    if (isFormValid && isQuantityValid) {
+      displayOrderDetails();
+    } else {
+      alert('Please fill in all required fields.');
     }
   });
 
-  form.style.display = 'none';
+  function displayOrderDetails() {
+    const detailsContainer = document.createElement('div');
+    detailsContainer.classList.add('order-details', 'd-flex', 'flex-column', 'p-4', 'm-4');
+    detailsContainer.textContent = 
+    `Product: ${selectedProduct.name}\n` +
+    `Price: $${selectedProduct.price}` +
+    `Name: ${nameInput.value}\n` +
+    `Surname: ${surNameInput.value}\n` +
+    `City: ${citySelect.value}\n` +
+    `Post Office: ${warehouse.value}\n` +
+    `Payment Method: ${paymentSelect.value}\n` +
+    `Quantity: ${quantityInput.value}\n` +
+    `Comment: ${commentInput.value}`;
 
-  document.body.appendChild(form);
+  productsListInfo.appendChild(detailsContainer);
+  }
 
-  return form;
+  orderForm.appendChild(submitButton);
+
+  clearElement(productsListInfo);
+
+  productsListInfo.appendChild(orderForm);
 }
 
-function updateView() {
-  if (currentView === 'categories') {
-    ul.style.display = 'block';
-  } else if (currentView === 'productInfo') {
-    ul.style.display = 'none';
+function resetView() {
+  clearElement(productsListInfo);
+}
+
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
   }
 }
 
-for (let i = 0; i < categories.length; i++) {
-  const category = categories[i];
-
-  const li = document.createElement('li');
-  li.classList.add('item');
-  Object.assign(li.style, copiedStyles.list);
-
-  const button = document.createElement('button');
-  button.classList.add(`button`);
-  Object.assign(button.style, copiedStyles.button);
-  button.textContent = category.name;
-
-  li.appendChild(button);
-
-  const subUl = document.createElement('ul');
-  subUl.classList.add('subul');
-  Object.assign(subUl.style, copiedStyles.subul);
-
-  for (let j = 0; j < category.values.length; j++) {
-    const subLi = document.createElement('li');
-    subLi.classList.add('subitem');
-    subLi.style.listStyle = 'none';
-    subUl.style.display = 'none';
-    const subButton = document.createElement('button');
-    subButton.classList.add(`button-inner`);
-    Object.assign(subButton.style, copiedStyles.subitemButton);
-    subButton.textContent = category.values[j];
-    subLi.appendChild(subButton);
-
-    const productInfo = productsInfo[category.values[j]];
-    const liItem = document.createElement('li');
-    liItem.classList.add('item');
-    liItem.style.listStyle = 'none';
-    Object.assign(liItem.style, copiedStyles.productInfo);
-    Object.assign(liItem.style, copiedStyles.list);
-    liItem.textContent = `Name: ${productInfo.name}, Price: $${productInfo.price}`;
-    subLi.appendChild(liItem);
-
-    const buyButton = document.createElement('button');
-    Object.assign(buyButton.style, copiedStyles.buyButton);
-
-    buyButton.textContent = 'Buy';
-    buyButton.addEventListener('click', () => {
-      form.style.display = 'block'; 
-      form.style.position = 'absolute';
-      form.style.top = '50%';
-      form.style.left = '50%';
-      form.style.border= '2px solid black';
-      alert(`Congratulation!\nYou buy:\n  ${productInfo.name},\n Price: $${productInfo.price}`);
-      updateView();
-    });
-    liItem.appendChild(buyButton)
-
-    subUl.appendChild(subLi);
-    subButton.addEventListener('click', function () {
-      liItem.style.display = liItem.style.display === 'none' ? Object.assign(liItem.style, copiedStyles.liitem) : 'none';
-      if (currentView === 'categories') {
-        updateView();
-      }
-    });
-  }
-
-  button.addEventListener('click', function () {
-    subUl.style.display = subUl.style.display === 'none' ? 'block' : 'none';
-  });
-
-  li.appendChild(subUl);
-  ul.appendChild(li);
-}
-
-containerDiv.appendChild(ul);
-document.body.append(containerDiv);
+createCategoryList();
