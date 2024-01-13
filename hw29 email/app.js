@@ -1,6 +1,4 @@
-const pattern = /^[a-zA-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-
-const pattern2 = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)/i;
+const pattern = /^[a-zA-z\d._%+-]+@[a-zA-Z\d]+\.[a-zA-Z]{2,}$/i;
 
 const invalidEmails = [
   "invalid_email1",
@@ -159,14 +157,9 @@ function validateEmail(email, pattern) {
   return pattern.test(email);
 };
 
-function validateEmail(email, pattern2) {
-  return pattern2.test(email);
-};
-
 invalidEmails.forEach(email => {
   console.log(
   `Email: ${email}
-  Validity pattern 1: ${validateEmail(email, pattern)}
-  Validity pattern 2: ${validateEmail(email, pattern)}`
+  Validity pattern : ${validateEmail(email, pattern)}`
   );
 });
