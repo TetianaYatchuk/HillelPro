@@ -1,0 +1,25 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+body {
+  background-color: burlywood;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: blue;
+  text-align: center;
+  padding: 10px;
+}
+
+img {
+width: 200px;
+}
