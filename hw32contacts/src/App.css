@@ -1,0 +1,80 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+table {
+  border: 2px solid black;
+}
+
+th {
+  font-size: 26px;
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+td {
+  font-size: 24px;
+  border: 1px solid black;
+  border-bottom: none;
+
+  button {
+    height: 28px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: rgb(159, 80, 16);
+    margin-top: 4px;
+  }
+}
+
+button {
+  height: 36px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 6px;
+  background: rgb(0, 98, 255);
+  color: #fff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 0;
+  left: 36%;
+  width: 200px;
+  padding: 6px;
+}
+
+label {
+  font-size: 20px;
+
+  button {
+    cursor: pointer;
+    background: green;
+    margin-right: 16px;
+  }
+}
+
+input {
+  width: 160px;
+  height: 26px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: gray;
+}
