@@ -26,7 +26,7 @@ export const fetchTodos = () => async (dispatch) => {
 
   try {
     const response = await fetch(
-      "https://mockapi.io/projects/65d0f96fab7beba3d5e3f426#"
+      "https://65d0f96fab7beba3d5e3f425.mockapi.io/todolist"
     );
     const data = await response.json();
 

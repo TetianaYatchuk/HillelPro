@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://mockapi.io/projects/65d0f96fab7beba3d5e3f426",
+  "proxy": "https://65d0f96fab7beba3d5e3f425.mockapi.io/todolist",
   "eslintConfig": {
     "extends": [
       "react-app",
