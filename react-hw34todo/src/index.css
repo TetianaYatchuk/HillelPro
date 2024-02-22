@@ -38,7 +38,7 @@ display: flex;
 }
 
 .todo-box .content p{
-margin-top: -6px;
+padding-top: 10px;
 margin-left: 6px;
 }
 
